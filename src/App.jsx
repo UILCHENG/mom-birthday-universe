@@ -15,7 +15,7 @@ function PlaceholderPhoto({ index }) {
   return <div className={`photo-placeholder tone-${index}`}><span>照片 {index + 1}</span><small>在 memories.js 中替换</small></div>
 }
 
-function Welcome({ onStart }) {
+function Welcome() {
   return <main className="welcome screen-enter">
     <div className="orbit orbit-one" />
     <div className="orbit orbit-two" />
@@ -25,7 +25,7 @@ function Welcome({ onStart }) {
       <p>有一些小小的时光，<br />想和你再走一遍。</p>
     </div>
     <div className="horizon" aria-hidden="true"><span className="figure figure-small" /><span className="figure figure-tall" /></div>
-    <button className="primary" onClick={onStart}>开启我们的回忆 <ArrowRight size={17} /></button>
+    <a className="primary" href="./?page=map">开启我们的回忆 <ArrowRight size={17} /></a>
     <span className="hint">轻轻点击，进入我们的记忆小宇宙</span>
   </main>
 }
@@ -93,7 +93,7 @@ function Letter({ onReplay }) {
 }
 
 export default function App() {
-  const [view, setView] = useState('welcome')
+  const [view, setView] = useState(() => new URLSearchParams(window.location.search).get('page') === 'map' ? 'map' : 'welcome')
   const [selected, setSelected] = useState(0)
   const [unlocked, setUnlocked] = useState(0)
 
@@ -105,7 +105,7 @@ export default function App() {
   }
 
   return <div className="app-shell"><Stars /><ErrorBoundary>
-    {view === 'welcome' && <Welcome onStart={() => setView('map')} />}
+    {view === 'welcome' && <Welcome />}
     {view === 'map' && <MemoryMap unlocked={unlocked} onSelect={openMemory} />}
     {view === 'memory' && <Memory index={selected} onBack={() => setView('map')} onNext={next} />}
     {view === 'letter' && <Letter onReplay={() => { setUnlocked(0); setView('welcome') }} />}
