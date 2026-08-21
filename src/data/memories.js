@@ -1,10 +1,10 @@
 // 把 image 换成你的照片路径（建议放入 public/photos/），再修改日期与文字即可。
 export const memories = [
-  { date: '2008.05.20', title: '故事开始的地方', note: '从第一次牵起你的手，我的世界就有了最温柔的方向。', image: '' },
-  { date: '2012.08.06', title: '一起看过的夏天', note: '阳光、海风，还有你笑起来的样子，都被我悄悄收藏。', image: '' },
-  { date: '2016.11.12', title: '平凡日子里的光', note: '后来才懂，最珍贵的回忆，是你一直都在的每个寻常日子。', image: '' },
-  { date: '2021.02.12', title: '我们慢慢长大', note: '我一步步长大，你也多了几根白发。谢谢你始终站在我身后。', image: '' },
-  { date: '2026.08.21', title: '走到今天，也走向以后', note: '这不是回忆的终点。往后的每一年，我们还要一起创造很多故事。', image: '' },
+  { date: '回忆 · 01', title: '青春洋溢的土土和豆豆呀', note: '然后我还在天上飞呀飞！', image: './photos/memory-01.jpg' },
+  { date: '回忆 · 02', title: '窝出生啦！', note: '这个是蠢萌的我和美丽的麻麻呀。', image: './photos/memory-02.jpg' },
+  { date: '回忆 · 03', title: '哇塞！', note: '坏小豆把土拨鼠压住啦！', image: './photos/memory-03.jpg' },
+  { date: '回忆 · 04', title: '嗖！我长大了！', note: '嘿嘿，我和妈妈比草原上的花还好看吧！', image: './photos/memory-04.jpg' },
+  { date: '回忆 · 05', title: '大豆、土土还有小豆！', note: '幸福美满的一家人！相亲相爱！', image: './photos/memory-05.jpg' },
 ]
 
 export const letter = {
