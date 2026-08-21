@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Component, useEffect, useState } from 'react'
 import { ArrowRight, CalendarDays, ChevronLeft, Heart, Sparkles } from 'lucide-react'
 import { letter, memories } from './data/memories'
 
@@ -30,9 +30,10 @@ function Welcome({ onStart }) {
   </main>
 }
 
-function Map({ unlocked, onSelect }) {
+function MemoryMap({ unlocked, onSelect }) {
+  const progress = String(Math.min(unlocked + 1, memories.length)).padStart(2, '0')
   return <main className="map-view screen-enter">
-    <header><div><small>我们的回忆轨迹</small><h2>下一站，在哪里？</h2></div><span className="progress">{String(Math.min(unlocked + 1, 5)).padStart(2, '0')} / 05</span></header>
+    <header><div><small>我们的回忆轨迹</small><h2>下一站，在哪里？</h2></div><span className="progress">{progress} / 05</span></header>
     <p className="map-hint">沿着星光，点击发亮的坐标</p>
     <div className="map-canvas">
       <svg className="path" viewBox="0 0 320 580" preserveAspectRatio="none" aria-hidden="true"><path d="M58 455 C178 414 246 386 204 312 S60 245 116 185 S248 122 150 62" /></svg>
@@ -43,6 +44,18 @@ function Map({ unlocked, onSelect }) {
       <div className="tiny-planet" aria-hidden="true" />
     </div>
   </main>
+}
+
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false }
+  }
+  static getDerivedStateFromError() { return { hasError: true } }
+  render() {
+    if (this.state.hasError) return <main className="fallback-view"><h2>回忆星球暂时迷路了</h2><p>请刷新页面，再轻轻开启一次。</p><button className="primary" onClick={() => window.location.reload()}>重新出发</button></main>
+    return this.props.children
+  }
 }
 
 function Memory({ index, onBack, onNext }) {
@@ -91,10 +104,11 @@ export default function App() {
     setUnlocked((value) => Math.max(value, selected + 1)); setView('map')
   }
 
-  return <div className="app-shell"><Stars />
+  return <div className="app-shell"><Stars /><ErrorBoundary>
     {view === 'welcome' && <Welcome onStart={() => setView('map')} />}
-    {view === 'map' && <Map unlocked={unlocked} onSelect={openMemory} />}
+    {view === 'map' && <MemoryMap unlocked={unlocked} onSelect={openMemory} />}
     {view === 'memory' && <Memory index={selected} onBack={() => setView('map')} onNext={next} />}
     {view === 'letter' && <Letter onReplay={() => { setUnlocked(0); setView('welcome') }} />}
+    </ErrorBoundary>
   </div>
 }
